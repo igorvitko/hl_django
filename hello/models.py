@@ -9,3 +9,22 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question_text
+
+    class Meta:
+        verbose_name = "Опрос"
+        verbose_name_plural = "Опросы"
+        ordering = ['-pub_date', 'question_text']
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.choice_text
+
+    class Meta:
+        verbose_name = "Ответ"
+        verbose_name_plural = "Ответы"
+        ordering = ['-votes', 'choice_text']
